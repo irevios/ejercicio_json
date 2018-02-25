@@ -4,11 +4,11 @@
 ## Enunciado
 El archivo [movies.json](movies.json) contiene información de las películas mejor valoradas. Se crearán los ejercicios correspondientes a la siguiente lista:
 
-1. Listar el título, año y duración de todas las películas.
-2. ¿Cuántas películas tienen el género drama y son posteriores al año 2000?
-3. Mostrar las películas que contengan en la sinopsis dos palabras dadas.
-4. Mostrar las películas en las que ha trabajado un actor dado.
-5. Mostrar el título y la url del póster de las tres películas con una media de puntuaciones más alta y lanzadas entre 2002 y 2010.
+* Listar el título, año y duración de todas las películas.
+* ¿Cuántas películas tienen el género drama y son posteriores al año 2000?
+* Mostrar las películas que contengan en la sinopsis dos palabras dadas.
+* Mostrar las películas en las que ha trabajado un actor dado.
+* Mostrar el título y la url del póster de las tres películas con una media de puntuaciones más alta y lanzadas entre 2002 y 2010.
 
 ## Árbol del JSON
 
