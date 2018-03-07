@@ -53,9 +53,16 @@ def buscar_sipnosis( palabra1, palabra2, arbol ):
     
     return lista
 
+def buscar_por_actor( actor, arbol ):
+    lista=[]
+    actor = validador_cadena(actor,arbol,'actors')
+    for i in range(len(arbol)):
+        if actor in arbol[i]['actors']:
+            lista.append(arbol[i]['title'])
+    return lista
 
 with open("movies.json") as fichero:
     arbol = json.load(fichero)
 
 
-print(buscar_sipnosis('continuing','crime', arbol))
+print(buscar_por_actor("Robert De Niro",arbol))
