@@ -61,11 +61,31 @@ def buscar_por_actor( actor, arbol ):
             lista.append(arbol[i]['title'])
     return lista
 
+def dias_del_mes ( mes, anyo ) :
+    '''Comprueba cuantos dias tiene un mes'''
+    if anyo % 400 == 0 or anyo % 4 == 0 and anyo % 100 != 0:
+        feb = 29
+    
+    else: 
+        feb = 28
+
+    dias = [ 31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ]
+    return dias[ mes - 1 ]
+
+def validador_fecha(fecha):
+    if len(fecha.split('/')) == 3:
+        fecha = fecha.split( "/" )
+        dia,mes, anyo = int(fecha[0]),int(fecha[1]),int(fecha[2])
+        if mes >= 1 and mes <= 12 and dia >= 1 and dia <= dias_del_mes( mes, anyo ):
+            return str(anyo)+'-'+str(mes)+'-'+str(dia)
+    fecha = input(' Debe tener el formato "DD/MM/AAAA".\n Vuelva a intentarlo: ')
+    return validador_fecha(fecha)
+
 def top_tres(fecha1,fecha2,arbol):
     lista=[]
     for i in range(len(arbol)):
         puntuacion = round(sum(arbol[i]['ratings'])/len(arbol[i]['ratings']),2)
-        if fecha1 <= arbol[i]['releaseDate'] and fecha2 >= arbol[i]['releaseDate']:
+        if validador_fecha(fecha1) <= arbol[i]['releaseDate'] and validador_fecha(fecha2) >= arbol[i]['releaseDate']:
             lista.append((arbol[i]['title'],arbol[i]['releaseDate'],puntuacion,))
         
     lista = sorted(lista,key=lambda x: x[2], reverse=True)
@@ -74,4 +94,4 @@ def top_tres(fecha1,fecha2,arbol):
 with open("movies.json") as fichero:
     arbol = json.load(fichero)
 
-print(top_tres('1988-09-30','1990-09-30',arbol))
+print(top_tres('30/09/1000','30/09/9999',arbol))
