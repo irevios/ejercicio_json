@@ -21,19 +21,22 @@ def lista_cadenas(apartado, arbol):
     listacadenas = []
     for i in range(len(arbol)):
             lista = arbol[i][apartado]
-            for unidad in lista:
-                listacadenas.append(unidad)
+            if type(lista) == list:
+                for unidad in lista:
+                    listacadenas.append(unidad)
+            else:
+                listacadenas = lista
     listacadenas = set(listacadenas)
     return listacadenas
 
-def validador_cadena(cadena, arbol, apartado, texto = ' Error. Vuelva a introducirlo: '):
+def validador_cadena( cadena, arbol, apartado, texto = ' Error. Vuelva a introducirlo: '):
     for i in lista_cadenas(apartado,arbol):
         if cadena.upper().replace('-','').replace('Á','A').replace('É','E').replace('Í','I').replace('Ó','O').replace('Ú','U') == i.upper().replace('-','').replace('Á','A').replace('É','E').replace('Í','I').replace('Ó','O').replace('Ú','U'):
             return i
     cadena = input(texto)
     return validador_cadena(cadena, arbol, tipo, texto)
 
-def cantidad_peliculas_genero(genero,anyo,arbol):
+def cantidad_peliculas_genero( genero, anyo, arbol):
     genero = validador_cadena(genero,arbol,'genres')    
     cantidad = 0
     for i in range(len(arbol)):
@@ -41,5 +44,18 @@ def cantidad_peliculas_genero(genero,anyo,arbol):
             cantidad += 1
     return cantidad
 
+def buscar_sipnosis( palabra1, palabra2, arbol ):
+    lista = []
+    for i in range(len(arbol)):
+        sipnosis = arbol[i]["storyline"]
+        if palabra1 in sipnosis and palabra2 in sipnosis:
+            lista.append((arbol[i]["title"],sipnosis))
+    
+    return lista
+
+
 with open("movies.json") as fichero:
     arbol = json.load(fichero)
+
+
+print(buscar_sipnosis('continuing','crime', arbol))
