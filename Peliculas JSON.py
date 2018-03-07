@@ -1,4 +1,5 @@
 import json
+import os
 
 def duracion_formato(duracion):
     duracion = int(duracion.replace('PT','').replace('M',''))
@@ -62,7 +63,6 @@ def buscar_por_actor( actor, arbol ):
     return lista
 
 def dias_del_mes ( mes, anyo ) :
-    '''Comprueba cuantos dias tiene un mes'''
     if anyo % 400 == 0 or anyo % 4 == 0 and anyo % 100 != 0:
         feb = 29
     
@@ -91,7 +91,20 @@ def top_tres(fecha1,fecha2,arbol):
     lista = sorted(lista,key=lambda x: x[2], reverse=True)
     return lista[0:3]
 
+def menu(arbol):
+    opcion = 0
+    while ( opcion != 6) :
+        os.system( 'clear' )
+        print( '\n PELÍCULAS EN ARCHIVO JSON\n {}\n 1 - Listar películas\n 2 - Cantidad de películas por género y posterior a año\n 3 - Buscar película por dos palabras en sipnosis\n 4 - Buscar película por actor\n 5 - Top 3 películas entre dos años\n 6 - Salir'.format( '=' * 23 ) )
+        opcion = int( input( ' Opción: ' ) )
+        if opcion == 1 :
+            for i in listar_peliculas( arbol ) :
+                print( ' Título: {}\n Año: {}\n Duración: {}\n'.format( i[0], i[1], i[2]) )
+
+        
+        input( '\n Pulse cualquier tecla para continuar.' )
+
 with open("movies.json") as fichero:
     arbol = json.load(fichero)
 
-print(top_tres('30/09/1000','30/09/9999',arbol))
+menu(arbol)
