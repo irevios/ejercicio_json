@@ -61,8 +61,15 @@ def buscar_por_actor( actor, arbol ):
             lista.append(arbol[i]['title'])
     return lista
 
+def top_tres(arbol):
+    lista=[]
+    for i in range(len(arbol)):
+        puntuacion = round(sum(arbol[i]['ratings'])/len(arbol[i]['ratings']),2)
+        lista.append((arbol[i]['title'],arbol[i]['posterurl'],puntuacion))
+        lista = sorted(lista,key=lambda x: x[2], reverse=True)
+    return lista[0:3]
+
 with open("movies.json") as fichero:
     arbol = json.load(fichero)
 
-
-print(buscar_por_actor("Robert De Niro",arbol))
+print(top_tres(arbol))
