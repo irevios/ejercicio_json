@@ -38,7 +38,6 @@ def validador_cadena( cadena, arbol, apartado, texto = ' Error. Vuelva a introdu
     return validador_cadena(cadena, arbol, tipo, texto)
 
 def cantidad_peliculas_genero( genero, anyo, arbol):
-    genero = validador_cadena(genero,arbol,'genres')    
     cantidad = 0
     for i in range(len(arbol)):
         if genero in arbol[i]["genres"] and int(anyo) < int(arbol[i]["year"][0:4]):
@@ -56,7 +55,6 @@ def buscar_sipnosis( palabra1, palabra2, arbol ):
 
 def buscar_por_actor( actor, arbol ):
     lista=[]
-    actor = validador_cadena(actor,arbol,'actors')
     for i in range(len(arbol)):
         if actor in arbol[i]['actors']:
             lista.append(arbol[i]['title'])
@@ -111,6 +109,13 @@ def menu(arbol):
             for i in buscar_sipnosis(palabra1,palabra2,arbol) :
                 print( ' Título: {}\n Sipnosis: {}\n'.format( i[0], i[1] ) )
 
+        if opcion == 4 :
+            actor = validador_cadena( input( ' Actor: ' ), arbol, "actors", ' Actor Incorrecto.\n Actor: ' )
+            print('\n Películas en las que aparece {}:'.format(actor))
+            for i in buscar_por_actor( actor,arbol ) :
+                print( ' {}'.format( i ) )
+       
+        input( '\n Pulse cualquier tecla para continuar.' )
 
 with open("movies.json") as fichero:
     arbol = json.load(fichero)
