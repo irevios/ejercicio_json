@@ -35,7 +35,7 @@ def validador_cadena( cadena, arbol, apartado, texto = ' Error. Vuelva a introdu
         if cadena.upper().replace('-','').replace('Á','A').replace('É','E').replace('Í','I').replace('Ó','O').replace('Ú','U') == i.upper().replace('-','').replace('Á','A').replace('É','E').replace('Í','I').replace('Ó','O').replace('Ú','U'):
             return i
     cadena = input(texto)
-    return validador_cadena(cadena, arbol, tipo, texto)
+    return validador_cadena(cadena, arbol, apartado, texto)
 
 def cantidad_peliculas_genero( genero, anyo, arbol):
     cantidad = 0
@@ -71,7 +71,7 @@ def dias_del_mes ( mes, anyo ) :
     return dias[ mes - 1 ]
 
 def validador_fecha(fecha):
-    if len(fecha.split('/')) == 3:
+    if len(fecha.split('/')) == 3 and len(fecha.split('/')[2]) > 1:
         fecha = fecha.split( "/" )
         dia,mes, anyo = int(fecha[0]),int(fecha[1]),int(fecha[2])
         if mes >= 1 and mes <= 12 and dia >= 1 and dia <= dias_del_mes( mes, anyo ):
@@ -83,7 +83,7 @@ def top_tres(fecha1,fecha2,arbol):
     lista=[]
     for i in range(len(arbol)):
         puntuacion = round(sum(arbol[i]['ratings'])/len(arbol[i]['ratings']),2)
-        if validador_fecha(fecha1) <= arbol[i]['releaseDate'] and validador_fecha(fecha2) >= arbol[i]['releaseDate']:
+        if fecha1 <= arbol[i]['releaseDate'] and fecha2 >= arbol[i]['releaseDate']:
             lista.append((arbol[i]['title'],arbol[i]['posterurl'],puntuacion,))
         
     lista = sorted(lista,key=lambda x: x[2], reverse=True)
@@ -115,6 +115,13 @@ def menu(arbol):
             for i in buscar_por_actor( actor,arbol ) :
                 print( ' {}'.format( i ) )
        
+        if opcion == 5 : 
+            fecha1 = validador_fecha(input( '\n Formato "DD/MM/AAAA"\n Desde la fecha: ' ) )
+            fecha2 = validador_fecha( input( ' Hasta la fecha: ' ) )
+            print( ' Las tres mejores películas desde {} hasta {}: \n'.format( fecha1, fecha2 ) )
+            for i in top_tres(fecha1,fecha2,arbol) :
+                print( '\n Título: {}\n Puntuación: {}\n Poster: {}'.format( i[0],i[2],i[1] ) )
+        
         input( '\n Pulse cualquier tecla para continuar.' )
 
 with open("movies.json") as fichero:
