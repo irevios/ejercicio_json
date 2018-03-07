@@ -1,4 +1,3 @@
-import json
 import os
 
 def duracion_formato( duracion ) :
@@ -123,8 +122,3 @@ def menu(arbol) :
                 print( '\n Título: {}\n Puntuación: {}\n Poster: {}'.format( i[0], i[2], i[1] ) )
         
         input( '\n Pulse cualquier tecla para continuar.' )
-
-with open( "movies.json" ) as fichero :
-    arbol = json.load( fichero )
-
-menu( arbol )
