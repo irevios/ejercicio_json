@@ -86,7 +86,7 @@ def top_tres(fecha1,fecha2,arbol):
     for i in range(len(arbol)):
         puntuacion = round(sum(arbol[i]['ratings'])/len(arbol[i]['ratings']),2)
         if validador_fecha(fecha1) <= arbol[i]['releaseDate'] and validador_fecha(fecha2) >= arbol[i]['releaseDate']:
-            lista.append((arbol[i]['title'],arbol[i]['releaseDate'],puntuacion,))
+            lista.append((arbol[i]['title'],arbol[i]['posterurl'],puntuacion,))
         
     lista = sorted(lista,key=lambda x: x[2], reverse=True)
     return lista[0:3]
@@ -100,9 +100,17 @@ def menu(arbol):
         if opcion == 1 :
             for i in listar_peliculas( arbol ) :
                 print( ' Título: {}\n Año: {}\n Duración: {}\n'.format( i[0], i[1], i[2]) )
-
+        if opcion == 2 :
+            genero = validador_cadena( input( ' Género: ' ), arbol, "genres", ' Género Incorrecto (¡Debe estar en inglés!).\n Género: ' )
+            anyo = input( ' Posterior al año: ' )
+            print( ' Películas con el género "{}" y posteriores al año "{}": {}'.format( genero, anyo, cantidad_peliculas_genero(genero, anyo, arbol ) ) )
         
-        input( '\n Pulse cualquier tecla para continuar.' )
+        if opcion == 3 :
+            palabra1 = input( " Deben estar en inglés. \n Primera palabra: ")
+            palabra2 = input(" Segunda palabra: ")
+            for i in buscar_sipnosis(palabra1,palabra2,arbol) :
+                print( ' Título: {}\n Sipnosis: {}\n'.format( i[0], i[1] ) )
+
 
 with open("movies.json") as fichero:
     arbol = json.load(fichero)
