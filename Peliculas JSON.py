@@ -24,12 +24,11 @@ def lista_cadenas(apartado, arbol):
             for unidad in lista:
                 listacadenas.append(unidad)
     listacadenas = set(listacadenas)
-    print(listacadenas)
     return listacadenas
 
 def validador_cadena(cadena, arbol, apartado, texto = ' Error. Vuelva a introducirlo: '):
     for i in lista_cadenas(apartado,arbol):
-        if cadena.upper().replace('Á','A').replace('É','E').replace('Í','I').replace('Ó','O').replace('Ú','U') == i.upper().replace('Á','A').replace('É','E').replace('Í','I').replace('Ó','O').replace('Ú','U'):
+        if cadena.upper().replace('-','').replace('Á','A').replace('É','E').replace('Í','I').replace('Ó','O').replace('Ú','U') == i.upper().replace('-','').replace('Á','A').replace('É','E').replace('Í','I').replace('Ó','O').replace('Ú','U'):
             return i
     cadena = input(texto)
     return validador_cadena(cadena, arbol, tipo, texto)
@@ -38,12 +37,9 @@ def cantidad_peliculas_genero(genero,anyo,arbol):
     genero = validador_cadena(genero,arbol,'genres')    
     cantidad = 0
     for i in range(len(arbol)):
-        print (i)
-        if genero in arbol[i]["genres"] and anyo > arbol[i]["year"]:
+        if genero in arbol[i]["genres"] and int(anyo) < int(arbol[i]["year"][0:4]):
             cantidad += 1
     return cantidad
 
 with open("movies.json") as fichero:
     arbol = json.load(fichero)
-
-print(cantidad_peliculas_genero('Drama','1600', arbol))
