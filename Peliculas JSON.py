@@ -17,7 +17,12 @@ def listar_peliculas(arbol):
 
     return lista
 
+def cantidad_peliculas_genero(genero,anyo,arbol):
+    cantidad = 0
+    for i in range(len(arbol))
+        if genero in arbol[i]["genres"] and anyo in arbol[i]["year"]:
+            cantidad += 1
+    return cantidad
+
 with open("movies.json") as fichero:
     arbol = json.load(fichero)
-
-listar_peliculas(arbol)
